@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from Character import Character
     
 
 class Screen():
@@ -56,7 +57,7 @@ class Screen():
         
         #CRIANDO OS BOTÕES
         #Criando o botão "new"
-        self.bt_new = Button(self.frame1, text="new")
+        self.bt_new = Button(self.frame1, text="new",command=self.create_new_character)
         self.bt_new.place(relx = 0.6, rely= 0.18, relwidth=0.07)
         #Criando o botão "delete"
         self.bt_delete = Button(self.frame1, text="delete")
@@ -99,12 +100,55 @@ class Screen():
 
         self.listcha.config(yscrollcommand = scroll_bar.set)
         scroll_bar.config(command = self.listcha.yview)
-
+    
+    
+    
+    #Criando as funções dos botões 
     def clear_fields(self):
         self.entry_code.delete(0, END)
         self.entry_name.delete(0, END)
         self.entry_level.delete(0, END)
         self.entry_class.delete(0, END)
+    
+    def create_new_character(self):
+        self.new_character_window = Toplevel(self.root)
+        self.new_character_window.title("New Character")
+        self.new_character_window.geometry("300x300")
+        self.new_character_window.resizable(False,False)
+        #Label e Entry para o nome e o level do personagem
+        self.label_name2 = Label(self.new_character_window, text="Name:")
+        self.label_name2.place(relx=0.1, rely=0.1)
+        self.entry_name2 = Entry(self.new_character_window)
+        self.entry_name2.place(relx=0.3, rely=0.1, relwidth=0.6)
+        self.label_level2 = Label(self.new_character_window, text="Level:")
+        self.label_level2.place(relx=0.1, rely=0.4)
+        self.entry_level2 = Entry(self.new_character_window)
+        self.entry_level2.place(relx=0.3, rely=0.4, relwidth=0.6)
+
+        #criando o botão done
+        self.bt_done = Button(self.new_character_window, text="Done", command=self.save_initial_data)
+        self.bt_done.place(relx=0.7, rely=0.8)
+
+    def save_initial_data(self):
+        new_character = Character()
+        new_character.name = self.entry_name2.get()
+        new_character.level = int(self.entry_level2.get())
+        
+        if new_character.level <= 4:
+            new_character.proficiency_bonus = 2
+        if new_character.level <= 8 and new_character.level > 4:
+            new_character.proficiency_bonus = 3
+        if new_character.level <= 12 and new_character.level > 8:
+            new_character.proficiency_bonus = 4
+        if new_character.level <= 16 and new_character.level > 12:
+            new_character.proficiency_bonus = 5
+        if new_character.level <= 20 and new_character.level > 16:
+            new_character.proficiency_bonus = 6
+
+        print(new_character.level)
+        print(new_character.name)
+        print(new_character.proficiency_bonus)
+        print(new_character.character_id)
 
      
         

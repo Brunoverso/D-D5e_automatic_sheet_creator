@@ -1,5 +1,8 @@
 class Character():
+    last_id = 0
     def __init__(self):
+        Character.last_id = Character.last_id + 1
+        self.character_id = Character.last_id
         self.name = ""
         self.level = 0
         self.proficiency_bonus = 0
@@ -81,7 +84,7 @@ class Character():
             self.damage = damage
             self. properties = properties
     class armor_shield (itens):
-        #stren = strength need to use the armor, and stealthd if the armor has desadvantage in stealth
+        #stren = strength needed to use the armor, and stealthd = if the armor has desadvantage in stealth
         def __init__(self, cost, weight,armorclass,stren,stealthd):
             super().__init__(cost, weight)
             self.armorclass = armorclass
