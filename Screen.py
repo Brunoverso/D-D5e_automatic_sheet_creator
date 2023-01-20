@@ -133,7 +133,10 @@ class Screen():
         new_character = Character()
         new_character.name = self.entry_name2.get()
         new_character.level = int(self.entry_level2.get())
-        
+        #Quando os dados são salvos a janela é apagada
+        self.new_character_window.destroy()
+        #E é aberto uma nova
+        self.customization_screen()
         if new_character.level <= 4:
             new_character.proficiency_bonus = 2
         if new_character.level <= 8 and new_character.level > 4:
@@ -150,14 +153,58 @@ class Screen():
         print(new_character.proficiency_bonus)
         print(new_character.character_id)
 
+
+    def customization_screen(self):
+        self.customization_window = Toplevel(self.root)
+        self.customization_window.title("Customization")
+        self.customization_window.geometry("300x300")
+        self.customization_window.resizable(False, False)
+        # Variável para armazenar os pontos restantes
+        self.points_remaining = 27
+        self.points_label = Label(self.customization_window, text = f"Points remaning: {self.points_remaining}")
+        self.points_label.pack()
+
+        # Criação dos labels para os atributos
+        self.label_strength = Label(self.customization_window, text="Strength:")
+        self.label_strength.place(relx=0.1, rely=0.1)
+        self.label_dexterity = Label(self.customization_window, text="Dexterity:")
+        self.label_dexterity.place(relx=0.1, rely=0.2)
+        self.label_constitution = Label(self.customization_window, text="Constitution:")
+        self.label_constitution.place(relx=0.1, rely=0.3)
+        self.label_intelligence = Label(self.customization_window, text="Intelligence:")
+        self.label_intelligence.place(relx=0.1, rely=0.4)
+        self.label_wisdom = Label(self.customization_window, text="Wisdom:")
+        self.label_wisdom.place(relx=0.1, rely=0.5)
+        self.label_charisma = Label(self.customization_window, text="Charisma:")
+
+        #Criação das entrys para os atributos
+        self.strength_entry = Entry(self.customization_window, validate="focusout")
+        self.strength_entry.place(relx=0.3, rely=0.1)
+        #O parâmetro "validatecommand" espera receber uma tupla de dois elementos, onde o primeiro é uma função e o segundo é uma string. A função é chamada quando o evento de validação ocorre e a string é passada como argumento para a função.
+        #A primeira parte da tupla é a função "self.strength_entry.register(self.validate)" que é uma função que foi registrada para ser chamada quando a validação ocorre. Ela é passada para o método "register" do objeto Entry, e essa função retorna outra função que é capaz de ser chamada com o parâmetro "%P"
+        # A segunda parte da tupla é a string "%P" que é passada como argumento para a função "validate" quando é chamada. Essa string representa o novo valor digitado pelo usuário e é passada como argumento para a função "validate"
+
+        self.strength_entry.config(validatecommand=(self.strength_entry.register(self.validate_number),'%P'))
+        self.strength_entry.insert(END, 8)
      
         
 
 
         
 
+    def validate_number(self, new_value):
+        if not new_value.isdigit():
+            return False
+        if int(new_value) < 8 or int(new_value) > 15:
+            return False
+        self.points_remaining = self.points_remaining - self.calculate_skill_points(int(new_value))
+        self.points_label.config(text = f"Points available: {self.points_remaining}")
+        return True
 
-
+    def calculate_skill_points(self,points):
+        atribute_coast = {8:0, 9:1, 10:2, 11:3, 12:4, 13:5, 14:7, 15:9}
+        cost = atribute_coast[points]
+        return cost
 
 
         
