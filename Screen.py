@@ -183,17 +183,17 @@ class Screen():
         self.label_charisma.place(relx=0.1, rely=0.6)
 
         #Criação das entrys para os atributos
-        self.strength_entry = Entry(self.customization_window, validate="focusin")
+        self.strength_entry = Entry(self.customization_window, validate="focusout")
         self.strength_entry.place(relx=0.4, rely=0.1)
-        self.dexterity_entry = Entry(self.customization_window, validate="focusin")
+        self.dexterity_entry = Entry(self.customization_window, validate="focusout")
         self.dexterity_entry.place(relx=0.4, rely=0.2)
-        self.constitution_entry = Entry(self.customization_window, validate="focusin")
+        self.constitution_entry = Entry(self.customization_window, validate="focusout")
         self.constitution_entry.place(relx=0.4, rely=0.3)
-        self.intelligence_entry = Entry(self.customization_window, validate="focusin")
+        self.intelligence_entry = Entry(self.customization_window, validate="focusout")
         self.intelligence_entry.place(relx=0.4, rely=0.4)
-        self.wisdom_entry = Entry(self.customization_window, validate="focusin")
+        self.wisdom_entry = Entry(self.customization_window, validate="focusout")
         self.wisdom_entry.place(relx=0.4, rely=0.5)
-        self.charisma_entry = Entry(self.customization_window, validate="focusin")
+        self.charisma_entry = Entry(self.customization_window, validate="focusout")
         self.charisma_entry.place(relx=0.4, rely=0.6)
         #O parâmetro "validatecommand" espera receber uma tupla de dois elementos, onde o primeiro é uma função e o segundo é uma string. A função é chamada quando o evento de validação ocorre e a string é passada como argumento para a função.
         #A primeira parte da tupla é a função "self.strength_entry.register(self.validate)" que é uma função que foi registrada para ser chamada quando a validação ocorre. Ela é passada para o método "register" do objeto Entry, e essa função retorna outra função que é capaz de ser chamada com o parâmetro "%P"
@@ -224,38 +224,32 @@ class Screen():
             return False
         
         if attribute == "strength":
-            old_value = self.new_character.strength
-            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.strength))
             self.points_remaining = self.points_remaining - delta
             self.new_character.strength = new_value
         
         elif attribute == "dexterity":
-            old_value = self.new_character.dextery
-            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.dextery))
             self.points_remaining = self.points_remaining - delta
             self.new_character.dextery = new_value
 
         elif attribute == "constitution":
-            old_value = self.new_character.dextery
-            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.constitution))
             self.points_remaining = self.points_remaining - delta
             self.new_character.constitution = new_value
 
         elif attribute == "intelligence":
-            old_value = self.new_character.intelligence
-            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.intelligence))
             self.points_remaining = self.points_remaining - delta
             self.new_character.intelligence = new_value
         
         elif attribute == "wisdom":
-            old_value = self.new_character.wisdom
-            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.wisdom))
             self.points_remaining = self.points_remaining - delta
             self.new_character.wisdom = new_value
         
         elif attribute == "charisma":
-            old_value = self.charisma_entry.get()
-            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.charisma))
             self.points_remaining = self.points_remaining - delta
             self.new_character.charisma = new_value
 
