@@ -152,6 +152,9 @@ class Screen():
         print(new_character.name)
         print(new_character.proficiency_bonus)
         print(new_character.character_id)
+        print(new_character.strength)
+        self.new_character = new_character
+
 
 
     def customization_screen(self):
@@ -163,6 +166,7 @@ class Screen():
         self.points_remaining = 27
         self.points_label = Label(self.customization_window, text = f"Points remaning: {self.points_remaining}")
         self.points_label.pack()
+        
 
         # Criação dos labels para os atributos
         self.label_strength = Label(self.customization_window, text="Strength:")
@@ -176,28 +180,88 @@ class Screen():
         self.label_wisdom = Label(self.customization_window, text="Wisdom:")
         self.label_wisdom.place(relx=0.1, rely=0.5)
         self.label_charisma = Label(self.customization_window, text="Charisma:")
+        self.label_charisma.place(relx=0.1, rely=0.6)
 
         #Criação das entrys para os atributos
-        self.strength_entry = Entry(self.customization_window, validate="focusout")
-        self.strength_entry.place(relx=0.3, rely=0.1)
+        self.strength_entry = Entry(self.customization_window, validate="focusin")
+        self.strength_entry.place(relx=0.4, rely=0.1)
+        self.dexterity_entry = Entry(self.customization_window, validate="focusin")
+        self.dexterity_entry.place(relx=0.4, rely=0.2)
+        self.constitution_entry = Entry(self.customization_window, validate="focusin")
+        self.constitution_entry.place(relx=0.4, rely=0.3)
+        self.intelligence_entry = Entry(self.customization_window, validate="focusin")
+        self.intelligence_entry.place(relx=0.4, rely=0.4)
+        self.wisdom_entry = Entry(self.customization_window, validate="focusin")
+        self.wisdom_entry.place(relx=0.4, rely=0.5)
+        self.charisma_entry = Entry(self.customization_window, validate="focusin")
+        self.charisma_entry.place(relx=0.4, rely=0.6)
         #O parâmetro "validatecommand" espera receber uma tupla de dois elementos, onde o primeiro é uma função e o segundo é uma string. A função é chamada quando o evento de validação ocorre e a string é passada como argumento para a função.
         #A primeira parte da tupla é a função "self.strength_entry.register(self.validate)" que é uma função que foi registrada para ser chamada quando a validação ocorre. Ela é passada para o método "register" do objeto Entry, e essa função retorna outra função que é capaz de ser chamada com o parâmetro "%P"
         # A segunda parte da tupla é a string "%P" que é passada como argumento para a função "validate" quando é chamada. Essa string representa o novo valor digitado pelo usuário e é passada como argumento para a função "validate"
 
-        self.strength_entry.config(validatecommand=(self.strength_entry.register(self.validate_number),'%P'))
+        self.strength_entry.config(validatecommand=(self.strength_entry.register(self.validate_number),'%P','strength')) 
         self.strength_entry.insert(END, 8)
-     
+        self.dexterity_entry.config(validatecommand=(self.dexterity_entry.register(self.validate_number),'%P','dexterity')) 
+        self.dexterity_entry.insert(END, 8)
+        self.constitution_entry.config(validatecommand=(self.constitution_entry.register(self.validate_number),'%P','constitution')) 
+        self.constitution_entry.insert(END, 8)
+        self.intelligence_entry.config(validatecommand=(self.intelligence_entry.register(self.validate_number),'%P','intelligence')) 
+        self.intelligence_entry.insert(END, 8)
+        self.wisdom_entry.config(validatecommand=(self.wisdom_entry.register(self.validate_number),'%P','wisdom')) 
+        self.wisdom_entry.insert(END, 8)
+        self.charisma_entry.config(validatecommand=(self.charisma_entry.register(self.validate_number),'%P','charisma')) 
+        self.charisma_entry.insert(END, 8)
+    
         
 
 
         
 
-    def validate_number(self, new_value):
+    def validate_number(self, new_value, attribute):
         if not new_value.isdigit():
             return False
         if int(new_value) < 8 or int(new_value) > 15:
             return False
-        self.points_remaining = self.points_remaining - self.calculate_skill_points(int(new_value))
+        
+        if attribute == "strength":
+            old_value = self.new_character.strength
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            self.points_remaining = self.points_remaining - delta
+            self.new_character.strength = new_value
+        
+        elif attribute == "dexterity":
+            old_value = self.new_character.dextery
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            self.points_remaining = self.points_remaining - delta
+            self.new_character.dextery = new_value
+
+        elif attribute == "constitution":
+            old_value = self.new_character.dextery
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            self.points_remaining = self.points_remaining - delta
+            self.new_character.constitution = new_value
+
+        elif attribute == "intelligence":
+            old_value = self.new_character.intelligence
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            self.points_remaining = self.points_remaining - delta
+            self.new_character.intelligence = new_value
+        
+        elif attribute == "wisdom":
+            old_value = self.new_character.wisdom
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            self.points_remaining = self.points_remaining - delta
+            self.new_character.wisdom = new_value
+        
+        elif attribute == "charisma":
+            old_value = self.charisma_entry.get()
+            delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(old_value))
+            self.points_remaining = self.points_remaining - delta
+            self.new_character.charisma = new_value
+
+        else:
+            return False
+
         self.points_label.config(text = f"Points available: {self.points_remaining}")
         return True
 

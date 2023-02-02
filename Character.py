@@ -6,6 +6,8 @@ class Character():
         self.name = ""
         self.level = 0
         self.proficiency_bonus = 0
+        
+        
 
         self.str_saving = False
         self.dex_saving = False
@@ -33,12 +35,12 @@ class Character():
         self.stealth = False
         self.survival = False
 
-        self.strength = 10
-        self.dextery = 10
-        self.constitution = 10
-        self.intelligence = 10
-        self.wisdom = 10
-        self.charisma = 10
+        self.strength = 8
+        self.dextery = 8
+        self.constitution = 8
+        self.intelligence = 8
+        self.wisdom = 8
+        self.charisma = 8
 
         self.age = 0
         self.alignment = "neutral"
