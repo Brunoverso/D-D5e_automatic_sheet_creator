@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
-from Character import Character
+from Character import *
+from tktooltip import ToolTip
+    
     
 
 class Screen():
@@ -148,11 +150,7 @@ class Screen():
         if new_character.level <= 20 and new_character.level > 16:
             new_character.proficiency_bonus = 6
 
-        print(new_character.level)
-        print(new_character.name)
-        print(new_character.proficiency_bonus)
-        print(new_character.character_id)
-        print(new_character.strength)
+    
         self.new_character = new_character
 
 
@@ -211,11 +209,152 @@ class Screen():
         self.wisdom_entry.insert(END, 8)
         self.charisma_entry.config(validatecommand=(self.charisma_entry.register(self.validate_number),'%P','charisma')) 
         self.charisma_entry.insert(END, 8)
+
+        #criando o botão done2
+        self.bt_done2 = Button(self.customization_window, text="Done", command=self.customization_screen2)
+        self.bt_done2.place(relx=0.7, rely=0.8)
+        
+
     
+   
+
+    def customization_screen2(self):
+        self.customization_window.destroy()
+        self.customization_window2 = Toplevel(self.root)
+        self.customization_window2.title("Race Customization")
+        self.customization_window2.geometry("800x800")
+        self.customization_window2.resizable(False, False)
+        text = Label(self.customization_window2, text="Choose one of the races")
+        text.pack()
+        
+        #Criando as opções de raça
+        self.dragonborn_button= Button (self.customization_window2, text="Dragonborn", command=self.dragonborn_choose)
+        self.dragonborn_button.pack()
+        
+        
+    
+        #adicionando os tooltip
+        ToolTip(self.dragonborn_button, msg= "Str +2; Cha +1; Draconic Ancestry; Breath Weapon; Damage resistence; Languages = Commom and Draconic")
+
+    
+    def dragonborn_choose(self):
+        self.new_character.race = "Dragonborn"
+        self.new_character.strength += 2
+        self.new_character.charisma += 1
+        self.new_character.languages += ["Commom","Draconic"]
+        self.dragonborn_window = Toplevel (self.root)
+        text_dragonborn = Label(self.dragonborn_window, text="Choose one of the colors")
+        text_dragonborn.pack()
+        
+        #Calculando o dano do ataque de baforada
+        if self.new_character.level <=5:
+            damage = "2d6"
+        elif self.new_character.level <=10:
+            damage = "3d6"
+        elif self.new_character.level <=15:
+            damage = "4d6"
+        else:
+            damage = "5d6"
+
+        
+        #Seleção do elemento:
+        self.black_button= Button(self.dragonborn_window, text="Black", command=lambda: self.dragonborn_color_choose("Black", damage))
+        self.black_button.pack()
+        ToolTip(self.black_button, msg= "Damage type = Acid; 5 by 30 ft. line (Dex. save); gain resistence to acid")
+
+        self.blue_button= Button(self.dragonborn_window, text="Blue", command=lambda: self.dragonborn_color_choose("Blue", damage))
+        self.blue_button.pack()
+        ToolTip(self.blue_button, msg= "Damage type = Lightning; 5 by 30 ft. line (Dex. save); gain resistence to lightning")
+
+        self.brass_button= Button(self.dragonborn_window, text="Brass", command=lambda: self.dragonborn_color_choose("Brass", damage))
+        self.brass_button.pack()
+        ToolTip(self.brass_button, msg= "Damage type = Fire; 5 by 30 ft. line (Dex. save); gain resistence to fire")
+        
+        self.bronze_button= Button(self.dragonborn_window, text="Bronze", command=lambda: self.dragonborn_color_choose("Bronze", damage))
+        self.bronze_button.pack()
+        ToolTip(self.bronze_button, msg= "Damage type = Lightning; 5 by 30 ft. line (Dex. save); resistence to Lightning")
+
+        self.copper_button= Button(self.dragonborn_window, text="Copper", command=lambda: self.dragonborn_color_choose("Copper", damage))
+        self.copper_button.pack()
+        ToolTip(self.copper_button, msg= "Damage type = Acid; 5 by 30 ft. line (Dex. save); gain resistence to acid")
+
+        self.gold_button= Button(self.dragonborn_window, text="Gold", command=lambda: self.dragonborn_color_choose("Gold", damage))
+        self.gold_button.pack()
+        ToolTip(self.gold_button, msg= "Damage type = 15 ft. cone (Dex. save); gain resistence to fire")
+
+        self.green_button= Button(self.dragonborn_window, text="Green", command=lambda: self.dragonborn_color_choose("Green", damage))
+        self.green_button.pack()
+        ToolTip(self.green_button, msg= "Damage type = 15 ft. cone (Con. save); gain resistence to poison")
+
+        self.red_button= Button(self.dragonborn_window, text="Red", command=lambda: self.dragonborn_color_choose("Red", damage))
+        self.red_button.pack()
+        ToolTip(self.red_button, msg= "Damage type = 15 ft. cone (Dex. save); gain resistence to fire")
+
+        self.silver_button= Button(self.dragonborn_window, text="Silver", command=lambda: self.dragonborn_color_choose("Silver", damage))
+        self.silver_button.pack()
+        ToolTip(self.silver_button, msg= "Damage type = 15 ft. cone (Con. save); gain resistence to cold")
+
+        self.white_button= Button(self.dragonborn_window, text="White", command=lambda: self.dragonborn_color_choose("White", damage))
+        self.white_button.pack()
+        ToolTip(self.white_button, msg= "Damage type = 15 ft. cone (Con. save); gain resistence to cold")
+
         
 
 
-        
+    def dragonborn_color_choose (self,color,damage):
+        if color == "Black":
+            breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Acid")
+            self.new_character.spells.append(breath_weapon)
+        elif color == "Blue":
+            breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Lightning")
+            self.new_character.spells.append(breath_weapon)
+        elif color == "Brass":
+            breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Fire")
+            self.new_character.spells.append(breath_weapon)
+        elif color == "Bronze":
+            breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Lightning")
+            self.new_character.spells.append(breath_weapon)
+        elif color == "Copper":
+            breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Acid")
+            self.new_character.spells.append(breath_weapon)
+        elif color == "Gold":
+            breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Fire")
+            self.new_character.spells.append(breath_weapon)
+        elif color == "Green":
+            breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Poison")
+            self.new_character.spells.append(breath_weapon)
+        elif color == "Red":
+            breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Fire")
+            self.new_character.spells.append(breath_weapon)
+        elif color == "Silver":
+            breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Cold")
+            self.new_character.spells.append(breath_weapon)
+        elif color == "White":
+            breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
+            self.new_character.resistence.append("Cold")
+            self.new_character.spells.append(breath_weapon)
+
+
+
+
+
+
+
+    def customization_screen3(self):
+        self.customization_window2.destroy()
+        self.customization_window3 = Toplevel(self.root)
+        self.customization_window3.title("Class Customization")
+        self.customization_window3.geometry("800x800")
+        self.customization_window3.resizable(False, False)
 
     def validate_number(self, new_value, attribute):
         if not new_value.isdigit():
@@ -227,32 +366,37 @@ class Screen():
             delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.strength))
             self.points_remaining = self.points_remaining - delta
             self.new_character.strength = new_value
+            self.new_character.strength_mod = new_value // 2
         
         elif attribute == "dexterity":
             delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.dextery))
             self.points_remaining = self.points_remaining - delta
             self.new_character.dextery = new_value
+            self.new_character.dextery_mod = new_value // 2
 
         elif attribute == "constitution":
             delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.constitution))
             self.points_remaining = self.points_remaining - delta
             self.new_character.constitution = new_value
+            self.new_character.constitution_mod = new_value // 2
 
         elif attribute == "intelligence":
             delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.intelligence))
             self.points_remaining = self.points_remaining - delta
             self.new_character.intelligence = new_value
+            self.new_character.intelligence_mod = new_value // 2
         
         elif attribute == "wisdom":
             delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.wisdom))
             self.points_remaining = self.points_remaining - delta
             self.new_character.wisdom = new_value
+            self.new_character.wisdom_mod = new_value // 2
         
         elif attribute == "charisma":
             delta = self.calculate_skill_points(int(new_value)) - self.calculate_skill_points(int(self.new_character.charisma))
             self.points_remaining = self.points_remaining - delta
             self.new_character.charisma = new_value
-
+            self.new_character.charisma_mod = new_value // 2
         else:
             return False
 
@@ -264,7 +408,7 @@ class Screen():
         cost = atribute_coast[points]
         return cost
 
-
-        
+    
+      
 
 
