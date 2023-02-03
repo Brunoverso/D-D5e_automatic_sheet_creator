@@ -6,6 +6,8 @@ class Character():
         self.name = ""
         self.level = 0
         self.proficiency_bonus = 0
+        self.race = ""
+        self.resistence = []
         
         
 
@@ -42,11 +44,20 @@ class Character():
         self.wisdom = 8
         self.charisma = 8
 
+        self.strength_mod = 0
+        self.dextery_mod = 0
+        self.constitution_mod = 0
+        self.intelligence_mod = 0
+        self.wisdom_mod = 0
+        self.charisma_mod = 0
+    
+
         self.age = 0
         self.alignment = "neutral"
         self.order = "neutral"
         self.speed = 9
         self.darkvision = False
+        self.darkvision_range = ""
         
         self.life = 0
         self.armor = 10
@@ -62,6 +73,7 @@ class Character():
         self.items= []
         self.armor_item = []
         self.weapons = []
+        self.spells = []
 
         
         self.warrior = 0
@@ -76,21 +88,30 @@ class Character():
         self.sorcerer = 0
         
 
-    class itens():
-        def __init__(self,cost,weight):
-            self.cost = cost
-            self.weight = weight
-    class weapon (itens):
-        def __init__(self, cost, weight, damage, properties):
-            super().__init__(cost, weight)
-            self.damage = damage
-            self. properties = properties
-    class armor_shield (itens):
-        #stren = strength needed to use the armor, and stealthd = if the armor has desadvantage in stealth
-        def __init__(self, cost, weight,armorclass,stren,stealthd):
-            super().__init__(cost, weight)
-            self.armorclass = armorclass
-            self.stren= stren
-            self.stealthd= stealthd
-
+class itens():
+    def __init__(self,cost,weight):
+        self.cost = cost
+        self.weight = weight
+class weapon (itens):
+    def __init__(self, cost, weight, damage, properties, range):
+        super().__init__(cost, weight)
+        self.damage = damage
+        self. properties = properties
+        self.range = range
+class armor_shield (itens):
+    #stren = strength needed to use the armor, and stealthd = if the armor has desadvantage in stealth
+    def __init__(self, cost, weight,armorclass,stren,stealthd):
+        super().__init__(cost, weight)
+        self.armorclass = armorclass
+        self.stren= stren
+        self.stealthd= stealthd
+class magic_attacks():
+    def __init__(self,level, time, school, C, Range, save, damage):
+        self.level = level
+        self.time = time
+        self.school = school
+        self.C = C
+        self.range = Range
+        self.save = save
+        self.damage = damage
         

@@ -231,22 +231,30 @@ class Screen():
         self.dragonborn_button= Button (self.customization_window2, text="Dragonborn", command=self.dragonborn_choose)
         self.dragonborn_button.pack()
         
+        self.dwarf_button= Button (self.customization_window2, text="Dwarf", command=self.dwarf_choose)
+        self.dwarf_button.pack()
+
+        
+        
+        
         
     
         #adicionando os tooltip
         ToolTip(self.dragonborn_button, msg= "Str +2; Cha +1; Draconic Ancestry; Breath Weapon; Damage resistence; Languages = Commom and Draconic")
-
+        ToolTip(self.dwarf_button, msg= "Str +2; Con +2; Dark Vision; Dwarven Resilience; Dwarven Combat Training; Toll Proficiency; Stone Cunning; Languages = Commom and Dwarvish")
+        
     
     def dragonborn_choose(self):
         self.new_character.race = "Dragonborn"
         self.new_character.strength += 2
         self.new_character.charisma += 1
         self.new_character.languages += ["Commom","Draconic"]
+        self.customization_window2.destroy()
         self.dragonborn_window = Toplevel (self.root)
         text_dragonborn = Label(self.dragonborn_window, text="Choose one of the colors")
         text_dragonborn.pack()
         
-        #Calculando o dano do ataque de baforada
+        #Calculando o dano do ataque da baforada
         if self.new_character.level <=5:
             damage = "2d6"
         elif self.new_character.level <=10:
@@ -343,10 +351,36 @@ class Screen():
             self.new_character.resistence.append("Cold")
             self.new_character.spells.append(breath_weapon)
 
+    
+    
+    def dwarf_choose(self):
+        self.new_character.race = "Dwarf"
+        self.new_character.strength += 2
+        self.new_character.languages += ["Commom","Dwarvish"]
+        self.new_character.darkvision = True
+        self.new_character.darkvision_range = "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light."
+        self.new_character.resistence.append("Poison")
+        self.new_character.special_abilities.append("You have advantage on saving throws against poison")
+        self.new_character.special_abilities.append("Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.")
+        self.customization_window2.destroy()
+        self.dwarf_window = Toplevel (self.root)
+        text_dwarf = Label(self.dwarf_window, text="Choose one of the subraces")
+        text_dwarf.pack()
 
 
+        #seleção da subraça
+        self.hill_button= Button(self.dwarf_window, text="Hill", command=self.dwarf_hill_choose)
+        self.hill_button.pack()
+        ToolTip(self.hill_button, msg= "Dwarven Toughness. Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.")
 
+        self.mountain_button= Button(self.dwarf_window, text="Mountain", command=self.dwarf_mountain_choose)
+        self.mountain_button.pack()
+        ToolTip(self.mountain_button, msg= "Dwarven Armor Training. You have proficiency with light and medium armor.")
 
+    def dwarf_hill_choose(self):
+        self.new_character.life += self.new_character.level
+    def dwarf_mountain_choose(self):
+        self.new_character.special_abilities.append("You have proficiency with light and medium armor")
 
 
     def customization_screen3(self):
