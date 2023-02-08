@@ -2,8 +2,9 @@ from tkinter import *
 from tkinter import ttk
 from Character import *
 from tktooltip import ToolTip
+
     
-    
+
 
 class Screen():
     def __init__(self,name,size,position, posi):
@@ -16,6 +17,8 @@ class Screen():
         if self.posi == 1:
             self.main_screen_frame()
         self.root.mainloop()
+        #Essa variavel é necessária para fazer contagem entre funções no futuro.
+        self.counter = 0
         
 
     def screen_config(self):
@@ -234,6 +237,19 @@ class Screen():
         self.dwarf_button= Button (self.customization_window2, text="Dwarf", command=self.dwarf_choose)
         self.dwarf_button.pack()
 
+        self.elf_button = Button (self.customization_window2, text="Elf", command=self.elf_choose)
+        self.elf_button.pack()
+
+        self.gnome_button = Button(self.customization_window2, text="Gnome", command=self.gnome_choose)
+        self.gnome_button.pack()
+
+        self.half_elf_button = Button(self.customization_window2, text="Half-Elf", command=self.half_elf_choose)
+        self.half_elf_button.pack()
+
+        self.half_orc_button = Button(self.customization_window2, text="Half-Orc", command=self.half_orc_choose)
+        self.half_orc_button.pack()
+
+        
         
         
         
@@ -242,8 +258,15 @@ class Screen():
         #adicionando os tooltip
         ToolTip(self.dragonborn_button, msg= "Str +2; Cha +1; Draconic Ancestry; Breath Weapon; Damage resistence; Languages = Commom and Draconic")
         ToolTip(self.dwarf_button, msg= "Str +2; Con +2; Dark Vision; Dwarven Resilience; Dwarven Combat Training; Toll Proficiency; Stone Cunning; Languages = Commom and Dwarvish")
-        
-    
+        ToolTip(self.elf_button, msg= "Dex +2; Dark Vision; Keen Senses; Fey Ancestry; Trance; Languages = Common and Elvish")
+        ToolTip(self.gnome_button, msg= "Int +2; Dark Vision; Gnome Cunning; Languages = Common and Gnomish")
+        ToolTip(self.half_elf_button, msg= "Cha +2; Choose any other two unique +1; Dark Vision; Fey Ancestry; SKill Versatility; Languages = Common, Elvish and one extra language of your choise")
+        ToolTip(self.half_orc_button, msg= "Str +2; Con +1; Dark Vision; Menacing; Relentless Endurance; Savage Attacks; Languages = Common, Orc")
+
+
+
+
+
     def dragonborn_choose(self):
         self.new_character.race = "Dragonborn"
         self.new_character.strength += 2
@@ -307,54 +330,73 @@ class Screen():
         ToolTip(self.white_button, msg= "Damage type = 15 ft. cone (Con. save); gain resistence to cold")
 
         
-
-
     def dragonborn_color_choose (self,color,damage):
         if color == "Black":
             breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Acid")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
         elif color == "Blue":
             breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Lightning")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
         elif color == "Brass":
             breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Fire")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
         elif color == "Bronze":
             breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Lightning")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
         elif color == "Copper":
             breath_weapon = magic_attacks(0,"action","none","none","5 by 30 ft. line", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Acid")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
         elif color == "Gold":
             breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Fire")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
         elif color == "Green":
             breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Poison")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
         elif color == "Red":
             breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Fire")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
         elif color == "Silver":
             breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Cold")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
         elif color == "White":
             breath_weapon = magic_attacks(0,"action","none","none","15 ft. cone", 8 + self.new_character.constitution_mod + self.new_character.proficiency_bonus, damage)
             self.new_character.resistence.append("Cold")
             self.new_character.spells.append(breath_weapon)
+            self.dragonborn_window.destroy()
+            self.customization_screen3()
 
     
     
     def dwarf_choose(self):
         self.new_character.race = "Dwarf"
+        self.new_character.speed = 25
         self.new_character.strength += 2
         self.new_character.languages += ["Commom","Dwarvish"]
         self.new_character.darkvision = True
@@ -379,9 +421,133 @@ class Screen():
 
     def dwarf_hill_choose(self):
         self.new_character.life += self.new_character.level
+        self.dwarf_window.destroy()
+        self.customization_screen3()
     def dwarf_mountain_choose(self):
         self.new_character.special_abilities.append("You have proficiency with light and medium armor")
+        self.dwarf_window.destroy()
+        self.customization_screen3()
 
+    
+    def elf_choose(self):
+        self.new_character.race = "Elf"
+        self.new_character.dextery += 2
+        self.new_character.languages += ["Commom","Elvish"]
+        self.new_character.darkvision = True
+        self.new_character.darkvision_range = "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light."
+        self.new_character.resistence.append("Charmed")
+        self.new_character.perception = self.new_character.proficiency_bonus
+        self.new_character.special_abilities.append("You have advantage on saving throws against been charmed")
+        self.new_character.special_abilities.append("magic can't put you to sleep, Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day, After resting in this way, you gain the same benefit that a human does from 8 hours of sleep")
+        self.customization_window2.destroy()
+        self.elf_window = Toplevel (self.root)
+        text_elf = Label(self.elf_window, text="Choose one of the subraces")
+        text_elf.pack()
+
+         #seleção da subraça
+        self.drow_button= Button(self.elf_window, text="Drow", command=self.elf_drow_choose)
+        self.drow_button.pack()
+        ToolTip(self.drow_button, msg= "Sunlight Sensitivity: You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight; Drow Magic. You know the dancing lights cantrip. When you reach 3rd level, you can cast the faerie fire spell once with this trait; you regain the ability to cast it when you finish a long rest. When you reach 5th level, you can also cast the darkness spell once per day with this trait; you regain the ability to cast it when you finish a long rest. Charisma is your spellcasting ability for these spells;  Drow Weapon Training: You have proficiency with rapiers, shortswords, and hand crossbows.")
+
+        self.high_button= Button(self.elf_window, text="High", command=self.elf_high_choose)
+        self.high_button.pack()
+        ToolTip(self.high_button, msg= "Elf Weapon Training. You have proficiency with the longsword, shortsword, shortbow, and longbow; Cantrip. You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.")
+
+        self.wood_button= Button(self.elf_window, text="Wood", command=self.elf_wood_choose)
+        self.wood_button.pack()
+        ToolTip(self.wood_button, msg= "Elf Weapon Training. You have proficiency with the longsword, shortsword, shortbow, and longbow; Fleet of Foot: Your base walking speed increases to 35 feet; Mask of the Wild. You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.")
+
+    def elf_drow_choose (self):
+        self.new_character.charisma += 1
+        self.new_character.special_abilities.append("Sunlight Sensitivity. You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight.")
+        self.new_character.special_abilities.append("Drow Magic. You know the dancing lights cantrip. When you reach 3rd level, you can cast the faerie fire spell once with this trait; you regain the ability to cast it when you finish a long rest. When you reach 5th level, you can also cast the darkness spell once per day with this trait; you regain the ability to cast it when you finish a long rest. Charisma is your spellcasting ability for these spells.")
+        self.elf_window.destroy()
+        self.customization_screen3()
+        self.new_character.special_abilities.append("Drow Weapon Training. You have proficiency with rapiers, shortswords, and hand crossbows.")
+    def elf_high_choose (self):
+        self.new_character.intelligence += 1
+        self.new_character.special_abilities.append("Elf Weapon Training. You have proficiency with the longsword, shortsword, shortbow, and longbow.")
+        #self.choose_cantrip():
+        #self.choose_language():
+        self.elf_window.destroy()
+        self.customization_screen3()
+    def elf_wood_choose (self):
+        self.new_character.wisdom += 1
+        self.new_character.special_abilities.append("Elf Weapon Training. You have proficiency with the longsword, shortsword, shortbow, and longbow.")
+        self.new_character.speed = 35
+        self.new_character.special_abilities.append("Mask of the Wild. You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.")
+        self.elf_window.destroy()
+        self.customization_screen3()
+
+
+    def gnome_choose(self):
+        self.new_character.race = "Gnome"
+        self.new_character.speed = 25
+        self.new_character.intelligence += 2
+        self.new_character.languages += ["Commom","Gnomish"]
+        self.new_character.darkvision = True
+        self.new_character.darkvision_range = "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light."
+        self.new_character.special_abilities.append("Gnome Cunning. You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.")
+        self.customization_window2.destroy()
+        self.gnome_window = Toplevel (self.root)
+        text_gnome = Label(self.gnome_window, text="Choose one of the subraces")
+        text_gnome.pack()
+
+        #seleção da subraça
+        self.forest_button= Button(self.gnome_window, text="Forest", command=self.gnome_forest_choose)
+        self.forest_button.pack()
+        ToolTip(self.forest_button, msg= "Natural Illusionist: You know the minor illusion cantrip. Intelligence is your spellcasting ability for it; Speak with Small Beasts: Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets. ")
+
+        self.rock_button= Button(self.gnome_window, text="Rock", command=self.gnome_rock_choose)
+        self.rock_button.pack()
+        ToolTip(self.rock_button, msg= "Artificer's Lore: Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply; Tinker: You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time; Clockwork Toy: This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents; Fire Starter: The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action; Music Box: When opened, this music box plays a single song at a moderate volume. The box stops playing when it reaches the song's end or when it is closed. ")
+
+    def gnome_forest_choose(self):
+        self.new_character.dextery += 1
+        #self.new_character.spells
+        self.new_character.special_abilities.append("Speak with Small Beasts. Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets.")
+        self.gnome_window.destroy()
+        self.customization_screen3()
+    def gnome_rock_choose(self):
+        self.new_character.constitution += 1
+        self.new_character.special_abilities.append("Artificer's Lore. Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply.")
+        self.new_character.special_abilities.append("Tinker. You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time. When you create a device, choose one of the following options: Clockwork Toy. This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents; Fire Starter: The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action; Music Box: When opened, this music box plays a single song at a moderate volume. The box stops playing when it reaches the song's end or when it is closed.")
+        self.gnome_window.destroy()
+        self.customization_screen3()
+
+
+    def half_elf_choose(self):
+        self.new_character.race = "Half-Elf"
+        self.new_character.charisma += 2
+        self.new_character.languages += ["Commom","Elvish"]
+        self.new_character.darkvision = True
+        self.new_character.darkvision_range = "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light."
+        self.new_character.resistence.append("Charmed")
+        self.proficiency_choose()
+        self.language_choose()
+        self.new_character.special_abilities.append("You have advantage on saving throws against been charmed")
+        self.new_character.special_abilities.append("magic can't put you to sleep, Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day, After resting in this way, you gain the same benefit that a human does from 8 hours of sleep")
+        self.customization_window2.destroy()
+        #self.half_elf_window = Toplevel (self.root)
+        #text_half_elf = Label(self.half_elf_window, text="Choose two of the attributes")
+        #text_half_elf.pack()
+        self.atributtes_choose(2,"Charisma")
+        
+
+
+    def half_orc_choose(self):
+        self.new_character.race = "Half-Orc"
+        self.new_character.strength += 2
+        self.new_character.languages += ["Commom","Elvish"]
+        self.new_character.darkvision = True
+        self.new_character.darkvision_range = "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light."
+        self.new_character.resistence.append("Charmed")
+        self.proficiency_choose()
+        self.language_choose()
+        self.new_character.special_abilities.append("You have advantage on saving throws against been charmed")
+        self.new_character.special_abilities.append("magic can't put you to sleep, Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day, After resting in this way, you gain the same benefit that a human does from 8 hours of sleep")
+        self.customization_window2.destroy()
+        self.customization_screen3()
 
     def customization_screen3(self):
         self.customization_window2.destroy()
@@ -442,7 +608,77 @@ class Screen():
         cost = atribute_coast[points]
         return cost
 
+    def proficiency_choose(self):
+        return
     
+    def language_choose(self):
+        return
       
+    def atributtes_choose(self,repeat,atributte):
+        self.counter = 0
+        while repeat > 0:
+
+            self.atributte_choose_window = Toplevel(self.root)
+            #seleção dos atributos
+            if atributte != "Strength" and self.counter != 1:
+                self.str_increase_button= Button(self.atributte_choose_window, text="Strength", command=self.increase_strength)
+                self.str_increase_button.pack()
+                
+            if atributte != "Dexterity" and self.counter != 2:
+                self.dex_increase_button= Button(self.atributte_choose_window, text="Dexterity", command=self.increase_dexterity)
+                self.dex_increase_button.pack()
+                
+            if atributte != "Constitution" and self.counter != 3:
+                self.con_increase_button= Button(self.atributte_choose_window, text="Constitution", command=self.increase_constitution)
+                self.con_increase_button.pack()
+               
+            if atributte != "Intelligence" and self.counter != 4:
+                self.int_increase_button= Button(self.atributte_choose_window, text="Intelligence", command=self.increase_intelligence)
+                self.int_increase_button.pack()
+                
+            if atributte != "Wisdom" and self.counter != 5:
+                self.wis_increase_button= Button(self.atributte_choose_window, text="Wisdom", command=self.increase_wisdom)
+                self.wis_increase_button.pack()
+                
+            if atributte != "Charisma" and self.counter != 6:
+                self.cha_increase_button= Button(self.atributte_choose_window, text="Charisma", command=self.increase_charisma)
+                self.cha_increase_button.pack()
+                
+            repeat = repeat -1
+            self.root.wait_window(self.atributte_choose_window)
+            print(self.counter)
+            
+            
+
+                
+            
+            
+            
+
+    def increase_strength(self):
+        self.new_character.strength += 1
+        self.atributte_choose_window.destroy()
+        self.counter = 1
+    def increase_dexterity(self):
+        self.new_character.dextery += 1
+        self.atributte_choose_window.destroy()
+        self.counter = 2
+    def increase_constitution(self):
+        self.new_character.constitution += 1
+        self.atributte_choose_window.destroy()
+        self.counter = 3
+    def increase_intelligence(self):
+        self.new_character.intelligence += 1
+        self.atributte_choose_window.destroy()
+        self.counter = 4
+    def increase_wisdom(self):
+        self.new_character.wisdom += 1
+        self.atributte_choose_window.destroy()
+        self.counter = 5
+    def increase_charisma(self):
+        self.new_character.charisma += 1
+        self.atributte_choose_window.destroy()
+        self.counter = 6
+        
 
 

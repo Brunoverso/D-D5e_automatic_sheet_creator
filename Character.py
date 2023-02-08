@@ -55,7 +55,7 @@ class Character():
         self.age = 0
         self.alignment = "neutral"
         self.order = "neutral"
-        self.speed = 9
+        self.speed = 30
         self.darkvision = False
         self.darkvision_range = ""
         
