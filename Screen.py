@@ -249,6 +249,14 @@ class Screen():
         self.half_orc_button = Button(self.customization_window2, text="Half-Orc", command=self.half_orc_choose)
         self.half_orc_button.pack()
 
+        self.halfling_button = Button(self.customization_window2, text="Halfling", command=self.halfling_choose)
+        self.halfling_button.pack()
+        
+        self.human_button = Button(self.customization_window2, text="Human", command=self.human_choose)
+        self.human_button.pack()
+
+        self.human_variant_button = Button(self.customization_window2, text="Human-Variant", command=self.human_variant_choose)
+        self.human_variant_button.pack()
         
         
         
@@ -262,8 +270,9 @@ class Screen():
         ToolTip(self.gnome_button, msg= "Int +2; Dark Vision; Gnome Cunning; Languages = Common and Gnomish")
         ToolTip(self.half_elf_button, msg= "Cha +2; Choose any other two unique +1; Dark Vision; Fey Ancestry; SKill Versatility; Languages = Common, Elvish and one extra language of your choise")
         ToolTip(self.half_orc_button, msg= "Str +2; Con +1; Dark Vision; Menacing; Relentless Endurance; Savage Attacks; Languages = Common, Orc")
-
-
+        ToolTip(self.halfling_button, msg= "Dex +2; Lucky; Brave; Halfling Nimbleness;Languages = Common, Halfling")
+        ToolTip(self.human_button, msg= "Str +1; Dex +1; Con +1; Int +1; Wis +1; Cha +1; Common and one extra language of your choise")
+        ToolTip(self.human_variant_button, msg= "Choose any two unique +1; skills; feat")
 
 
 
@@ -413,17 +422,19 @@ class Screen():
         #seleção da subraça
         self.hill_button= Button(self.dwarf_window, text="Hill", command=self.dwarf_hill_choose)
         self.hill_button.pack()
-        ToolTip(self.hill_button, msg= "Dwarven Toughness. Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.")
+        ToolTip(self.hill_button, msg= "Wis +1; Dwarven Toughness. Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.")
 
         self.mountain_button= Button(self.dwarf_window, text="Mountain", command=self.dwarf_mountain_choose)
         self.mountain_button.pack()
-        ToolTip(self.mountain_button, msg= "Dwarven Armor Training. You have proficiency with light and medium armor.")
+        ToolTip(self.mountain_button, msg= "Str +2; Dwarven Armor Training. You have proficiency with light and medium armor.")
 
     def dwarf_hill_choose(self):
         self.new_character.life += self.new_character.level
+        self.new_character.wisdom += 1
         self.dwarf_window.destroy()
         self.customization_screen3()
     def dwarf_mountain_choose(self):
+        self.new_character.strength += 2
         self.new_character.special_abilities.append("You have proficiency with light and medium armor")
         self.dwarf_window.destroy()
         self.customization_screen3()
@@ -447,15 +458,15 @@ class Screen():
          #seleção da subraça
         self.drow_button= Button(self.elf_window, text="Drow", command=self.elf_drow_choose)
         self.drow_button.pack()
-        ToolTip(self.drow_button, msg= "Sunlight Sensitivity: You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight; Drow Magic. You know the dancing lights cantrip. When you reach 3rd level, you can cast the faerie fire spell once with this trait; you regain the ability to cast it when you finish a long rest. When you reach 5th level, you can also cast the darkness spell once per day with this trait; you regain the ability to cast it when you finish a long rest. Charisma is your spellcasting ability for these spells;  Drow Weapon Training: You have proficiency with rapiers, shortswords, and hand crossbows.")
+        ToolTip(self.drow_button, msg= "Cha +1;Sunlight Sensitivity: You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight; Drow Magic. You know the dancing lights cantrip. When you reach 3rd level, you can cast the faerie fire spell once with this trait; you regain the ability to cast it when you finish a long rest. When you reach 5th level, you can also cast the darkness spell once per day with this trait; you regain the ability to cast it when you finish a long rest. Charisma is your spellcasting ability for these spells;  Drow Weapon Training: You have proficiency with rapiers, shortswords, and hand crossbows.")
 
         self.high_button= Button(self.elf_window, text="High", command=self.elf_high_choose)
         self.high_button.pack()
-        ToolTip(self.high_button, msg= "Elf Weapon Training. You have proficiency with the longsword, shortsword, shortbow, and longbow; Cantrip. You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.")
+        ToolTip(self.high_button, msg= "Int +1; Elf Weapon Training. You have proficiency with the longsword, shortsword, shortbow, and longbow; Cantrip. You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.")
 
         self.wood_button= Button(self.elf_window, text="Wood", command=self.elf_wood_choose)
         self.wood_button.pack()
-        ToolTip(self.wood_button, msg= "Elf Weapon Training. You have proficiency with the longsword, shortsword, shortbow, and longbow; Fleet of Foot: Your base walking speed increases to 35 feet; Mask of the Wild. You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.")
+        ToolTip(self.wood_button, msg= "Wis +1; Elf Weapon Training. You have proficiency with the longsword, shortsword, shortbow, and longbow; Fleet of Foot: Your base walking speed increases to 35 feet; Mask of the Wild. You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.")
 
     def elf_drow_choose (self):
         self.new_character.charisma += 1
@@ -496,11 +507,11 @@ class Screen():
         #seleção da subraça
         self.forest_button= Button(self.gnome_window, text="Forest", command=self.gnome_forest_choose)
         self.forest_button.pack()
-        ToolTip(self.forest_button, msg= "Natural Illusionist: You know the minor illusion cantrip. Intelligence is your spellcasting ability for it; Speak with Small Beasts: Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets. ")
+        ToolTip(self.forest_button, msg= "Dex +1; Natural Illusionist: You know the minor illusion cantrip. Intelligence is your spellcasting ability for it; Speak with Small Beasts: Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets. ")
 
         self.rock_button= Button(self.gnome_window, text="Rock", command=self.gnome_rock_choose)
         self.rock_button.pack()
-        ToolTip(self.rock_button, msg= "Artificer's Lore: Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply; Tinker: You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time; Clockwork Toy: This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents; Fire Starter: The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action; Music Box: When opened, this music box plays a single song at a moderate volume. The box stops playing when it reaches the song's end or when it is closed. ")
+        ToolTip(self.rock_button, msg= "Con +1; Artificer's Lore: Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply; Tinker: You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time; Clockwork Toy: This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents; Fire Starter: The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action; Music Box: When opened, this music box plays a single song at a moderate volume. The box stops playing when it reaches the song's end or when it is closed. ")
 
     def gnome_forest_choose(self):
         self.new_character.dextery += 1
@@ -528,9 +539,6 @@ class Screen():
         self.new_character.special_abilities.append("You have advantage on saving throws against been charmed")
         self.new_character.special_abilities.append("magic can't put you to sleep, Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day, After resting in this way, you gain the same benefit that a human does from 8 hours of sleep")
         self.customization_window2.destroy()
-        #self.half_elf_window = Toplevel (self.root)
-        #text_half_elf = Label(self.half_elf_window, text="Choose two of the attributes")
-        #text_half_elf.pack()
         self.atributtes_choose(2,"Charisma")
         
 
@@ -538,16 +546,75 @@ class Screen():
     def half_orc_choose(self):
         self.new_character.race = "Half-Orc"
         self.new_character.strength += 2
-        self.new_character.languages += ["Commom","Elvish"]
+        self.new_character.constitution += 1
+        self.new_character.languages += ["Commom","Orc"]
         self.new_character.darkvision = True
         self.new_character.darkvision_range = "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light."
-        self.new_character.resistence.append("Charmed")
-        self.proficiency_choose()
-        self.language_choose()
-        self.new_character.special_abilities.append("You have advantage on saving throws against been charmed")
-        self.new_character.special_abilities.append("magic can't put you to sleep, Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day, After resting in this way, you gain the same benefit that a human does from 8 hours of sleep")
+        self.new_character.intimidation = self.new_character.proficiency_bonus
+        self.new_character.special_abilities.append("Relentless Endurance. When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest.")
+        self.new_character.special_abilities.append("Savage Attacks. When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit.")
         self.customization_window2.destroy()
         self.customization_screen3()
+
+
+    
+    def halfling_choose(self):
+        self.new_character.race = "Halfling"
+        self.new_character.dextery += 2
+        self.new_character.languages += ["Commom","Halfling"]
+        self.new_character.resistence.append("frightened.")
+        self.new_character.special_abilities.append("When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.")
+        self.new_character.special_abilities.append("You can move through the space of any creature that is of a size larger than yours.")
+        self.customization_window2.destroy()
+        self.halfling_window = Toplevel (self.root)
+        text_halfling = Label(self.elf_window, text="Choose one of the subraces")
+        text_halfling.pack()
+
+         #seleção da subraça
+        self.lightfoot_button= Button(self.halfling_window, text="Lightfoot", command=self.halfling_lightfoot_choose)
+        self.lightfoot_button.pack()
+        ToolTip(self.lightfoot_button, msg= "Cha +1; Naturally Stealthy: You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.")
+
+        self.stout_button= Button(self.halfling_window, text="Stout", command=self.halfling_stout_choose)
+        self.stout_button.pack()
+        ToolTip(self.stout_button, msg= "Con +1; Stout Resilience. You have advantage on saving throws against poison, and you have resistance against poison damage.")
+
+    def halfling_lightfoot_choose(self):
+        self.new_character.special_abilities.append("Naturally Stealthy. You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.")
+        self.new_character.charisma += 1
+        self.halfling_window.destroy()
+        self.customization_screen3()
+    def halfling_stout_choose(self):
+        self.new_character.special_abilities.append("You have advantage on saving throws against poison")
+        self.new_character.resistence.append("Poison")
+        self.new_character.constitution += 1
+        self.halfling_window.destroy()
+        self.customization_screen3()
+
+
+
+    def human_choose(self):
+        self.new_character.race = "Human"
+        self.new_character.strength
+        self.new_character.dextery
+        self.new_character.constitution
+        self.new_character.intelligence
+        self.new_character.wisdom
+        self.new_character.charisma
+        self.new_character.languages += ["Commom"]
+        self.language_choose()
+        self.customization_window2.destroy()
+        self.customization_screen3()
+        
+
+    def human_variant_choose(self):
+        self.new_character.race = "Human-Variant"
+        self.proficiency_choose()
+        self.language_choose()
+        self.feat_choose()
+        self.customization_window2.destroy()
+        self.atributtes_choose(2,"none")
+
 
     def customization_screen3(self):
         self.customization_window2.destroy()
@@ -614,6 +681,9 @@ class Screen():
     def language_choose(self):
         return
       
+    def feat_choose(self):
+        return
+
     def atributtes_choose(self,repeat,atributte):
         self.counter = 0
         while repeat > 0:
